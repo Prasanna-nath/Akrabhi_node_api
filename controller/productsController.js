@@ -62,10 +62,40 @@ const deleteProduct = (req, res) => {
   });
 };
 
+const getProductDetailsForCompany = (req, res) => {
+  const company_id = req.params.company_id;
+
+  pool.query(
+    queries.getProductDetailsForCompany,
+    [company_id],
+    (error, results) => {
+      if (error) throw error;
+      res.status(200).json(results.rows);
+    }
+  );
+};
+
+const getProductsAboveAverageDiscount = (req, res) => {
+  const Company_id = req.params.company_id;
+
+  pool.query(
+    queries.getProductsAboveAverageDiscount,
+    [Company_id, Company_id],
+    (error, results) => {
+      if (error) throw error;
+      res.status(200).json(results.rows);
+      //res.json(results.rowCount);
+      // console.log(results.rows);
+    }
+  );
+};
+
 module.exports = {
   getAllProducts,
   getProductById,
   addProduct,
   updateProduct,
   deleteProduct,
+  getProductDetailsForCompany,
+  getProductsAboveAverageDiscount,
 };

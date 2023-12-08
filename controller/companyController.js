@@ -67,10 +67,22 @@ const deleteCompany = (req, res) => {
   });
 };
 
+const getCompaniesWithMostDiscounts = (req, res) => {
+  pool.query(queries.getCompaniesWithMostDiscountsQuery, (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send("Internal Server Error");
+    } else {
+      res.status(200).json(results.rows);
+    }
+  });
+};
+
 module.exports = {
   getCompany,
   getCompanyById,
   addCompany,
   updateCompany,
   deleteCompany,
+  getCompaniesWithMostDiscounts,
 };
