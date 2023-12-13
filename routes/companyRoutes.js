@@ -7,6 +7,7 @@ router.get("/:company_id", companyController.getCompanyById);
 router.post("/", companyController.addCompany);
 router.put("/:company_id", companyController.updateCompany);
 router.delete("/:company_id", companyController.deleteCompany);
+
 router.get("/most_discounts", companyController.getCompaniesWithMostDiscounts);
 
 module.exports = router;

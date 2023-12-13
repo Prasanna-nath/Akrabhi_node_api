@@ -76,18 +76,31 @@ const getProductDetailsForCompany = (req, res) => {
 };
 
 const getProductsAboveAverageDiscount = (req, res) => {
-  const Company_id = req.params.company_id;
+  try {
+    const Company_id = req.params.company_id;
 
-  pool.query(
-    queries.getProductsAboveAverageDiscount,
-    [Company_id, Company_id],
-    (error, results) => {
-      if (error) throw error;
-      res.status(200).json(results.rows);
-      //res.json(results.rowCount);
-      // console.log(results.rows);
-    }
-  );
+    // Log the Company_id for debugging
+    console.log("Company_id:", Company_id);
+
+    pool.query(
+      queries.getProductsAboveAverageDiscount,
+      [Company_id, Company_id],
+      (error, results) => {
+        if (error) {
+          console.error("Error executing query:", error);
+          throw error;
+        }
+
+        // Log the query results for debugging
+        console.log("Query results:", results.rows);
+
+        res.status(200).json(results.rows);
+      }
+    );
+  } catch (err) {
+    console.error("Error in getProductsAboveAverageDiscount:", err);
+    res.status(500).send("Internal Server Error");
+  }
 };
 
 module.exports = {

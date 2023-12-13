@@ -70,13 +70,16 @@ const deleteCompany = (req, res) => {
 const getCompaniesWithMostDiscounts = (req, res) => {
   pool.query(queries.getCompaniesWithMostDiscountsQuery, (error, results) => {
     if (error) {
-      console.error(error);
-      res.status(500).send("Internal Server Error");
-    } else {
-      res.status(200).json(results.rows);
+      console.error("Error executing query:", error);
+      return res.status(500).json({ error: "Internal Server Error" });
     }
+
+    const companiesWithDiscounts = results.rows;
+
+    res.status(200).json({ companiesWithDiscounts });
   });
 };
+
 
 module.exports = {
   getCompany,
